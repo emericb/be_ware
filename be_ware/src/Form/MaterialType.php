@@ -15,7 +15,6 @@ class MaterialType extends AbstractType
             ->add('name')
             ->add('price')
             ->add('quantity')
-            ->add('created_at')
         ;
     }
 

@@ -1,3 +1,7 @@
 $(document).ready( function () {
-    $('#myTable').DataTable();
+    $('#myTable').dataTable( {
+        "columnDefs": [
+            { "searchable": false, "targets": [0,2,3,4,5] }
+        ]
+    } );
 } );

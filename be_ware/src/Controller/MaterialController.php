@@ -93,7 +93,7 @@ class MaterialController extends AbstractController
     /**
      * @Route("/{id}/decrease", name="material_decrease", methods={"GET", "POST"})
      */
-    public function decrease($id): Response
+    public function decrease($id, \Swift_Mailer $mailer): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
         $material = $entityManager->getRepository(Material::class)->find($id);
@@ -106,6 +106,24 @@ class MaterialController extends AbstractController
             $material->setQuantity($quantity);
             $entityManager->flush();
         }
+
+        if ($quantity <= 0) {
+            $message = (new \Swift_Message('Module_Materiel'))
+                ->setFrom('module_materiel@email.com')
+                ->setTo('1c1b0fd5bd-8d0ca5@inbox.mailtrap.io')
+                ->setBody(
+                    $this->renderView(
+                        'emails/send.html.twig',
+                        ['id' => $id]
+                    ),
+                    'text/html'
+                );
+            $mailer->send($message);
+
+            // show a successful alert message after the email was sent
+            $this->addFlash("success", "Un email d'information à été envoyé à l'admin.");
+        }
+
         return $this->redirectToRoute('material_index');
     }
 }

@@ -25,11 +25,11 @@
                         <tr>
                             <td>{{ material.id }}</td>
                             <td>{{ material.name }}</td>
-                            <td>{{ material.price }}</td>
+                            <td>{{ material.price }}€</td>
                             <td>{{ material.quantity }}</td>
                             <td>{{ material.createdAt ? material.createdAt|date('Y-m-d H:i:s') : '' }}</td>
                             <td>
-                                <a href="{{ path('material_show', {'id': material.id}) }}">show</a>
+                                <a class="btn" data-toggle="modal" data-target="#{{material.id}}" href="#">show</a>
                                 <a href="{{ path('material_edit', {'id': material.id}) }}">edit</a>
                                 <a href="{{ path('material_decrease', {'id': material.id}) }}">decrease</a>
                             </td>
@@ -47,4 +47,5 @@
     </div>
 
     <a href="{{ path('material_new') }}">Create new</a>
+    {{ include('material/show.html.twig') }}
 {% endblock %}
