@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Material index{% endblock %}
+
+{% block body %}
+    <h1>Material index</h1>
+
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-lg-12">
+                <table id="myTable" class=" table" style="width: 100%">
+                    <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Created_at</th>
+                        <th>actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for material in materials %}
+                        {% if material.quantity > 0 %}
+                        <tr>
+                            <td>{{ material.id }}</td>
+                            <td>{{ material.name }}</td>
+                            <td>{{ material.price }}</td>
+                            <td>{{ material.quantity }}</td>
+                            <td>{{ material.createdAt ? material.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                            <td>
+                                <a href="{{ path('material_show', {'id': material.id}) }}">show</a>
+                                <a href="{{ path('material_edit', {'id': material.id}) }}">edit</a>
+                                <a href="{{ path('material_decrease', {'id': material.id}) }}">decrease</a>
+                            </td>
+                        </tr>
+                        {% endif %}
+                    {% else %}
+                        <tr>
+                            <td colspan="6">no records found</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <a href="{{ path('material_new') }}">Create new</a>
+{% endblock %}
